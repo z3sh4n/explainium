@@ -1,0 +1,48 @@
+video_transcript_task:
+  description: >
+    extract this youtube video transcript from this youtube video id {youtube_video_id} to find the most relevant information and core message of the video 
+
+    IF YOU HAVE TRANSCRIPT SKIP THIS TASK
+
+    Follow these rules:
+    - The transcript should be in English
+    - The transcript should be in a format that is easy to read and understand
+  expected_output: >
+    youtube video transcript from the given youtube video id 
+  agent: summerizer
+
+summerizer_task:
+  description: >
+    Summarize the provided YouTube transcript to identify the core message, main arguments, and any presented solutions to problems. The summary should facilitate quick recollection for educational purposes, adhering to a formal, clear, and concise style.
+  expected_output: >
+    A list of 5 distinct bullet points. Each bullet point should be 2-3 sentences long and:
+    - Clearly state a main argument or a problem and its solution.
+    - Briefly explain *how* an argument is supported or *why* a solution is effective.
+    - Prioritize the most significant and relevant information. If more than 5 critical points exist, select the top 5 by relevance, ensuring they comprehensively represent the video's essence. 
+    -If fewer than 5 main points are naturally present, expand slightly on those points by providing additional context or elaboration from the transcript to reach 5 bullet points.
+  agent: summerizer
+
+question_architect_task:
+  description: >
+   Your task is to create 5 questions that assess a user's recall and deep understanding of the provided context. 
+   Design questions that not only test memory but also encourage the user to demonstrate their comprehension and, where appropriate, their ability to apply the information. 
+   Ensure the difficulty is well-calibrated, avoiding extremes.
+
+   Follow these rules:
+   - The questions should be in English
+   - The questions should be in a format that is easy to read and understand
+   - use video instead of transcript word, don't use word transcript 
+
+  expected_output: >
+   A list of 5 questions in pretty markdown format don't use code anywhere
+   just add a title with ## and five questions
+
+   <EXAMPLE>
+   ## Agent Orchestration and Data Engineering: Test Your Knowledge
+    1.  The video argues that data engineers already possess skills valuable in agent orchestration. What are *three* specific data engineering skills or areas of expertise mentioned that directly translate to success in agent orchestration?
+    2.  According to the video, what is a key reason why many impressive AI demos *fail to scale* effectively? Identify at least *two* specific challenges mentioned.
+    3.  The video mentions Langraph, Crew AI, and Autogen. Briefly describe what each of these tools essentially *replicates* from a data engineering perspective?
+    4.  The speaker posits that AI engineering might just be data engineering with "smarter pieces." Explain this statement in your own words. What is the *core skill* the speaker believes is more important than just writing effective prompts?
+    5.  What *specific actions* does the video encourage data engineers to take to prepare for the next evolution of data engineering and excel in the world of agent orchestration?
+   </EXAMPLE>
+  agent: question_architect
