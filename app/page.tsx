@@ -49,8 +49,8 @@ export default function Home() {
           console.log(data.content)
           setResponse(data.content)
         })
-    } catch (err) {
-      setError("An error occurred while processing your request")
+    } catch (err: unknown) {
+      setError(typeof err === "string" ? err : "An error occurred while processing your request")
     } finally {
       setIsLoading(false)
     }
