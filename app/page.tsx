@@ -43,7 +43,7 @@ export default function Home() {
 
     try {
       const videoId = extractYouTubeId(url)
-      await fetch(`http://127.0.0.1:8000/explain?video_id=${videoId}`)
+      await fetch(`/api/explain?video_id=${videoId}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data.content)

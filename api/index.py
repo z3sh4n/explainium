@@ -18,11 +18,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get('/')
+@app.get('/api')
 async def test():
     return {'message': 'Hello World'}
 
-@app.get("/explain")
+@app.get("/api/explain")
 async def explain(video_id: str):
 
     if not video_id:
@@ -37,6 +37,3 @@ async def explain(video_id: str):
         return {"content": result.raw}
     except Exception as e:
         raise HTTPException(status_code=404, detail="Something went wrong with Agent")
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
