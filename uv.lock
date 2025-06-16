@@ -782,12 +782,14 @@ source = { editable = "." }
 dependencies = [
     { name = "crewai", extra = ["tools"] },
     { name = "fastapi" },
+    { name = "supadata" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "crewai", extras = ["tools"], specifier = ">=0.121.1,<1.0.0" },
     { name = "fastapi", specifier = ">=0.115.12" },
+    { name = "supadata", specifier = ">=1.2.1" },
 ]
 
 [[package]]
@@ -3246,6 +3248,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ce/20/08dfcd9c983f6a6f4a1000d934b9e6d626cff8d2eeb77a89a68eef20a2b7/starlette-0.46.2.tar.gz", hash = "sha256:7f7361f34eed179294600af672f565727419830b54b7b084efe44bb82d2fccd5", size = 2580846, upload-time = "2025-04-13T13:56:17.942Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8b/0c/9d30a4ebeb6db2b25a841afbb80f6ef9a854fc3b41be131d249a977b4959/starlette-0.46.2-py3-none-any.whl", hash = "sha256:595633ce89f8ffa71a015caed34a5b2dc1c0cdb3f0f1fbd1e69339cf2abeec35", size = 72037, upload-time = "2025-04-13T13:56:16.21Z" },
+]
+
+[[package]]
+name = "supadata"
+version = "1.2.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/04/3d/14f5367e7876116a56e860caed78430353c82630c789587817a12b6a526c/supadata-1.2.1.tar.gz", hash = "sha256:a07ba1a8636cde258e78c52b6a71aa8b9e5e4ecfb7a79c479875905abafa3a67", size = 15933, upload-time = "2025-05-07T09:46:00.457Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d8/11/3733747abcbeb5923f414e87ed366b1c67c46b4de37280dd85060687d18a/supadata-1.2.1-py3-none-any.whl", hash = "sha256:14ea860e0742249e8680db5f7296273bc36bf292f90de684a74954c907e126d2", size = 14092, upload-time = "2025-05-07T09:45:57.4Z" },
 ]
 
 [[package]]

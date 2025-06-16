@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
-
-from src.explainium_agent.crew import Explainium
+import uvicorn
+from explainium_agent.crew import Explainium
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -37,3 +37,6 @@ async def explain(video_id: str):
         return {"content": result.raw}
     except Exception as e:
         raise HTTPException(status_code=404, detail="Something went wrong with Agent")
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

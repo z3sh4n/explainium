@@ -7,10 +7,10 @@ requires-python = ">=3.10,<3.13"
 dependencies = [
     "crewai[tools]>=0.121.1,<1.0.0",
     "fastapi>=0.115.12",
+    "supadata>=1.2.1",
 ]
 
 [project.scripts]
-explainium_agent = "explainium_agent.main:run"
 run_crew = "explainium_agent.main:run"
 
 [build-system]
