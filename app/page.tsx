@@ -79,11 +79,11 @@ export default function Home() {
   }
 
   // Helper function to extract YouTube video ID
-  const extractYouTubeId = (url: string): string => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
-    const match = url.match(regExp)
-    return match && match[2].length === 11 ? match[2] : "unknown"
-  }
+  // const extractYouTubeId = (url: string): string => {
+  //   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+  //   const match = url.match(regExp)
+  //   return match && match[2].length === 11 ? match[2] : "unknown"
+  // }
 
   const handleCopy = () => {
     if (response) {
