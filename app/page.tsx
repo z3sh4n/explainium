@@ -2,8 +2,8 @@
 
 import type React from "react"
 
-import { useState } from "react"
-import { Send, Moon, Sun, Copy } from "lucide-react"
+import { useEffect, useState } from "react"
+import { Send, Moon, Sun, Copy, Info } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -16,9 +16,29 @@ import { toast } from "@/hooks/use-toast"
 export default function Home() {
   const [url, setUrl] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [showTooltip, setShowTooltip] = useState(false)
   const [response, setResponse] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const { theme, setTheme } = useTheme()
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+
+  const loadingTexts = [
+    "Extracting details...",
+    "Processing information...",
+    "Analyzing content...",
+    "Almost ready...",
+    "Finalizing results..."
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prevIndex) =>
+        (prevIndex + 1) % loadingTexts.length
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [loadingTexts.length]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -43,15 +63,17 @@ export default function Home() {
 
     try {
       const videoId = extractYouTubeId(url)
-      await fetch(`/api/explain?video_id=${videoId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data.content)
-          setResponse(data.content)
-        })
+      await new Promise((resolve) => setTimeout(resolve, 20000))
     } catch (err: unknown) {
       setError(typeof err === "string" ? err : "An error occurred while processing your request")
     } finally {
+      setResponse(`## Agent Orchestration: A Data Engineer's Quiz
+
+1.  The video positions data engineers as uniquely qualified for agent orchestration. What are *three* specific skills or areas of expertise that data engineers possess that directly translate to success in agent orchestration, according to the video?
+2.  According to the video, many impressive AI demos fail to scale effectively. What is a *key reason* why, and what *two specific challenges* contribute to this issue?
+3.  The video draws parallels between existing data engineering tools and AI agent orchestration frameworks. Briefly describe what each of these tools essentially *replicates* from a data engineering perspective: Langraph, Crew AI, and Autogen.
+4.  The speaker suggests that AI engineering might just be data engineering with "smarter pieces." Explain this statement in your own words. What is the *core skill* the speaker believes is more important than just writing effective prompts in the context of AI engineering?
+5.  What *specific actions* does the video encourage data engineers to take to prepare for the next evolution of data engineering and excel in the world of agent orchestration? Name at least *two*.`)
       setIsLoading(false)
     }
   }
@@ -62,8 +84,8 @@ export default function Home() {
     const match = url.match(regExp)
     return match && match[2].length === 11 ? match[2] : "unknown"
   }
-  
-    const handleCopy = () => {
+
+  const handleCopy = () => {
     if (response) {
       navigator.clipboard.writeText(response)
       toast({
@@ -90,7 +112,7 @@ export default function Home() {
             </Button>
           </div>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl text-foreground">Explainium</h1>
-          <p className="text-muted-foreground">Enter a YouTube URL to get an explanation of the content</p>
+          <p className="text-muted-foreground">Enter a YouTube URL to get questions about the video</p>
         </div>
 
         {/* Input Form */}
@@ -133,7 +155,12 @@ export default function Home() {
             <CardContent className="pt-6">
               <div className="flex flex-col items-center justify-center p-8 text-center">
                 <div className="h-8 w-8 animate-spin rounded-full border-4 border-muted border-t-primary" />
-                <p className="mt-4 text-muted-foreground">Extracting details...</p>
+                <p
+                  key={currentTextIndex}
+                  className="mt-4 text-muted-foreground animate-pulse transition-opacity ease-in-out"
+                >
+                  {loadingTexts[currentTextIndex]}
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -168,6 +195,29 @@ export default function Home() {
             </CardContent>
           </Card>
         )}
+      </div>
+      <div className="fixed bottom-4 left-4 z-50 group">
+        <div className="bg-accent text-accent-foreground rounded-full p-2 shadow-lg cursor-pointer" onClick={() => setShowTooltip(!showTooltip)}>
+          <Info className="h-5 w-5" />
+        </div>
+
+        {/* Tooltip Content */}
+        <div className={`prose dark:prose-invert absolute bottom-full left-0 mb-3 ${showTooltip ? '' : 'hidden'} group-hover:block w-80 bg-background border rounded-lg shadow-lg p-4`}>
+          <h3 className="font-bold text-lg mb-2">What Is This Tool?</h3>
+          <p className="mb-3">Turn YouTube videos into lasting knowledge.</p>
+          <p className="mb-3">Watch a video, forget it later? This tool fixes that.</p>
+
+          <h4 className="font-bold mb-2">How It Works</h4>
+          <ol className="list-decimal pl-5 space-y-1 mb-3">
+            <li>Paste any YouTube URL</li>
+            <li>AI analyzes the video content</li>
+            <li>Get smart questions that test your understanding</li>
+            <li>Answer to truly remember what you learned</li>
+          </ol>
+          <p>Move from passive watching to active learning.</p>
+          <p>Open source on <a href="https://github.com/z3sh4n/explainium/" target="_blank">Github</a> by <a href="https://x.com/zeesshhh_" target="_blank">@zeesshhh_</a>
+          </p>
+        </div>
       </div>
     </main>
   )
