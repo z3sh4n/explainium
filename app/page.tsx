@@ -62,7 +62,7 @@ export default function Home() {
     setIsLoading(true)
 
     try {
-      const videoId = extractYouTubeId(url)
+      // const videoId = extractYouTubeId(url)
       await new Promise((resolve) => setTimeout(resolve, 20000))
     } catch (err: unknown) {
       setError(typeof err === "string" ? err : "An error occurred while processing your request")
