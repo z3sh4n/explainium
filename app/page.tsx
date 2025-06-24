@@ -112,7 +112,7 @@ export default function Home() {
             </Button>
           </div>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl text-foreground">Explainium</h1>
-          <p className="text-muted-foreground">Enter a YouTube URL to get questions about the video</p>
+          <p className="text-muted-foreground">Enter a YouTube URL to get questions about the video!</p>
         </div>
 
         {/* Input Form */}
