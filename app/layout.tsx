@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 
+require('dotenv').config()
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

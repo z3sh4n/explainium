@@ -22,6 +22,7 @@ export default function Home() {
   const { theme, setTheme } = useTheme()
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
+
   const loadingTexts = [
     "Extracting details...",
     "Processing information...",
@@ -60,30 +61,28 @@ export default function Home() {
 
     // Simulate processing
     setIsLoading(true)
-
     try {
       // const videoId = extractYouTubeId(url)
-      await new Promise((resolve) => setTimeout(resolve, 20000))
+     const videoId = extractYouTubeId(url)
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}?video_id=${videoId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.content)
+          setResponse(data.content)
+        })
     } catch (err: unknown) {
       setError(typeof err === "string" ? err : "An error occurred while processing your request")
     } finally {
-      setResponse(`## Agent Orchestration: A Data Engineer's Quiz
-
-1.  The video positions data engineers as uniquely qualified for agent orchestration. What are *three* specific skills or areas of expertise that data engineers possess that directly translate to success in agent orchestration, according to the video?
-2.  According to the video, many impressive AI demos fail to scale effectively. What is a *key reason* why, and what *two specific challenges* contribute to this issue?
-3.  The video draws parallels between existing data engineering tools and AI agent orchestration frameworks. Briefly describe what each of these tools essentially *replicates* from a data engineering perspective: Langraph, Crew AI, and Autogen.
-4.  The speaker suggests that AI engineering might just be data engineering with "smarter pieces." Explain this statement in your own words. What is the *core skill* the speaker believes is more important than just writing effective prompts in the context of AI engineering?
-5.  What *specific actions* does the video encourage data engineers to take to prepare for the next evolution of data engineering and excel in the world of agent orchestration? Name at least *two*.`)
       setIsLoading(false)
     }
   }
 
   // Helper function to extract YouTube video ID
-  // const extractYouTubeId = (url: string): string => {
-  //   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
-  //   const match = url.match(regExp)
-  //   return match && match[2].length === 11 ? match[2] : "unknown"
-  // }
+  const extractYouTubeId = (url: string): string => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+    const match = url.match(regExp)
+    return match && match[2].length === 11 ? match[2] : "unknown"
+  }
 
   const handleCopy = () => {
     if (response) {
@@ -215,7 +214,7 @@ export default function Home() {
             <li>Answer to truly remember what you learned</li>
           </ol>
           <p>Move from passive watching to active learning.</p>
-          <p>Open source on <a href="https://github.com/z3sh4n/explainium/" target="_blank">Github</a> by <a href="https://x.com/zeesshhh_" target="_blank">@zeesshhh_</a>
+          <p>Open source on <a href="https://github.com/z3sh4n/explainium/" target="_blank">Github</a> by <a href="https://x.com/zeesshhh0" target="_blank">@zeesshhh0</a>
           </p>
         </div>
       </div>
